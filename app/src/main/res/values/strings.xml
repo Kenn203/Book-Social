@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Book Club</string>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">DwScEGmeN2cuYRcjd3MsiBDleQo6sahepXLvc2vM</string>
+    <string name="back4app_client_key">MyvNTOvRBlDmxTymOW8tZiaxxhWn2bSt2RsQyp4T</string>
+    <string name="facebook_app_id">609734550486265</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+</resources>
