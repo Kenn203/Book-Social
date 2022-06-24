@@ -10,17 +10,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.google.android.material.tabs.TabLayout;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 import com.parse.facebook.ParseFacebookUtils;
 
 import org.json.JSONException;
@@ -31,6 +32,10 @@ import java.util.Collection;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
+    private EditText mEtUsername;
+    private EditText mEtPassword;
+    private Button mBtnSignIn;
+    private Button mBtnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,53 @@ public class MainActivity extends AppCompatActivity {
 
         ParseInstallation.getCurrentInstallation().saveInBackground();
         btnLogin = findViewById(R.id.btnLogin);
+        mEtUsername = findViewById(R.id.mEtUsername);
+        mEtPassword = findViewById(R.id.mEtPassword);
+        mBtnSignIn = findViewById(R.id.mBtnSignIn);
+        mBtnSignUp = findViewById(R.id.mBtnSignUp);
+
+        mBtnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mBtnSignIn.getText().toString().isEmpty() && !mEtPassword.getText().toString().isEmpty()) {
+                    ParseUser.logInInBackground(mEtUsername.getText().toString(), mEtPassword.getText().toString(), new LogInCallback() {
+                        @Override
+                        public void done(ParseUser user, ParseException e) {
+                            if (user != null) {
+                                Toast.makeText(getApplicationContext(), "Login Successfully!", Toast.LENGTH_SHORT).show();
+                                displayAlert("Welcome Back!", "");
+                            } else {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        mBtnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mEtUsername.getText().toString().isEmpty() && !mEtPassword.getText().toString().isEmpty()) {
+                    ParseUser user = new ParseUser();
+                    user.setUsername(mEtUsername.getText().toString());
+                    user.setPassword(mEtPassword.getText().toString());
+                    user.signUpInBackground(new SignUpCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Toast.makeText(getApplicationContext(), "Sign Up Successfully!", Toast.LENGTH_SHORT).show();
+                                displayAlert("Welcome to Book Club!", "");
+                            } else {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,19 +98,25 @@ public class MainActivity extends AppCompatActivity {
                 ParseFacebookUtils.logInWithReadPermissionsInBackground(MainActivity.this, permission, new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
-                        if(e != null){
+                        if (e != null) {
                             ParseUser.logOut();
                             Log.e("error", "Error", e);
-                        }if(user == null){
+
+                        }
+                        if (user == null) {
                             ParseUser.logOut();
                             Toast.makeText(MainActivity.this, "Canceled Facebook login", Toast.LENGTH_SHORT).show();
-                        }else if (user.isNew()){
+                            return;
+
+                        }
+                        if (user.isNew()) {
                             Toast.makeText(MainActivity.this, "User signed up through Facebook", Toast.LENGTH_SHORT).show();
                             getUserDetailsFromFB();
-                        }else{
-                            Toast.makeText(MainActivity.this,"User logged in through Facebook", Toast.LENGTH_SHORT).show();
-                            getUserDetailsFromParse();
+                            return;
+
                         }
+                        Toast.makeText(MainActivity.this, "User logged in through Facebook", Toast.LENGTH_SHORT).show();
+                        getUserDetailsFromParse();
 
                     }
                 });
@@ -70,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
         ParseUser user = ParseUser.getCurrentUser();
         String title = "Welcome Back";
         String message = "User: " + user.getUsername() + "\n" + "Login Email: " + user.getEmail();
-        alertDisplayer(title, message);
+        displayAlert(title, message);
     }
 
-    private void alertDisplayer(String title, String message) {
+    private void displayAlert(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
                 .setTitle(title)
                 .setMessage(message)
@@ -82,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
 
-                        Intent intent = new Intent(MainActivity.this, logoutActivity.class);
+                        Intent intent = new Intent(MainActivity.this, LogoutActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
@@ -98,10 +156,6 @@ public class MainActivity extends AppCompatActivity {
                 ParseUser user = ParseUser.getCurrentUser();
                 try {
                     user.setUsername(jsonObject.getString("name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
                     user.setEmail(jsonObject.getString("email"));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -109,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 user.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        alertDisplayer("New here", "Welcome");
+                        displayAlert("New here", "Welcome");
                     }
                 });
             }

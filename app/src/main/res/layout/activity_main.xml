@@ -12,9 +12,81 @@
         android:layout_height="wrap_content"
         android:text="Login with Facebook"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/mBtnSignUp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/mBtnSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/mBtnSignUp"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/mEtUsername"
+        android:layout_width="327dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="username"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/mEtPassword"
+        android:layout_width="326dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/mEtUsername"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/mEtUsername"
+        app:layout_constraintTop_toBottomOf="@+id/mEtUsername" />
+
+    <Button
+        android:id="@+id/mBtnSignIn"
+        android:layout_width="192dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="56dp"
+        android:text="Sign In"
+        app:layout_constraintEnd_toEndOf="@+id/mEtPassword"
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toStartOf="@+id/mEtPassword"
+        app:layout_constraintTop_toBottomOf="@+id/mEtPassword" />
+
+    <Button
+        android:id="@+id/mBtnSignUp"
+        android:layout_width="207dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="24dp"
+        android:text="Sign Up"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Don't have an account?"
+        app:layout_constraintEnd_toEndOf="@+id/mBtnSignIn"
+        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintStart_toStartOf="@+id/mBtnSignIn"
+        app:layout_constraintTop_toBottomOf="@+id/mBtnSignIn" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="116dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.513" />
+        app:srcCompat="@drawable/cover_image"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

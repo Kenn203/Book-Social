@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.parse.ParseUser;
 
-public class logoutActivity extends AppCompatActivity {
+public class LogoutActivity extends AppCompatActivity {
     private Button btnLogout;
 
     @Override
@@ -24,13 +24,13 @@ public class logoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
-                alertDisplayer("Logging out...", "see you soon!");
+                displayAlert("Logging out...", "see you soon!");
             }
         });
     }
 
-    private void alertDisplayer(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(logoutActivity.this)
+    private void displayAlert(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LogoutActivity.this)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -38,7 +38,7 @@ public class logoutActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
 
-                        Intent intent = new Intent(logoutActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LogoutActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
