@@ -144,6 +144,6 @@ Add book to either read, unread or now reading
   * Start working on some stretch goals
   
    
-##Difficult Challenges
+## Difficult Challenges
   * Start typing and swipe on search to auto-complete
   * User can zoom in and out of a book image
