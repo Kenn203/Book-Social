@@ -18,6 +18,9 @@
         android:theme="@style/Theme.BookClub"
         tools:targetApi="31">
         <activity
+            android:name=".BookDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchActivity"
             android:exported="false" />
         <activity
