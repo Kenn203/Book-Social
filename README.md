@@ -146,4 +146,4 @@ Add book to either read, unread or now reading
    
 ## Difficult Challenges
   * Start typing and swipe on search to auto-complete
-  * User can zoom in and out of a book image
+  
