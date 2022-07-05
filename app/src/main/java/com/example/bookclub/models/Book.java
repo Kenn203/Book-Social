@@ -5,9 +5,12 @@ import android.text.TextUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+@Parcel
 public class Book {
     private String openLibraryId;
     private String author;
@@ -17,6 +20,7 @@ public class Book {
     private int pages;
     private String ISBN;
 
+    public void Book(){}
 
     public String getOpenLibraryId() {
         return openLibraryId;
@@ -28,14 +32,6 @@ public class Book {
 
     public String getBookIMDB(){return bookIMDB;}
     public void setBookIMDB(String bookIMDB){this.bookIMDB = bookIMDB;}
-
-    public String getPublisher(){return publisher;}
-    public void setPublisher(String publisher){this.publisher = publisher;}
-
-    public int getPages(){return pages;}
-    public void setPages(int pages){this.pages = pages;}
-
-
 
     public String getAuthor() {
         return author;
@@ -57,6 +53,7 @@ public class Book {
             }
             book.title = jsonObject.has("title_suggest") ? jsonObject.getString("title_suggest") : "";
             book.author = getAuthor(jsonObject);
+
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -95,4 +92,12 @@ public class Book {
         }
         return books;
     }
+    public  String getISBN(){return ISBN;}
+    public void setISBN(String ISBN){this.ISBN = ISBN;}
+
+    public String getPublisher(){return publisher;}
+    public void setPublisher(String publisher){this.publisher = publisher;}
+
+    public int getPages(){return pages;}
+    public void setPages(int pages){this.pages = pages;}
 }

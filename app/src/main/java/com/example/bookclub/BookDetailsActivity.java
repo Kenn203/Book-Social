@@ -12,8 +12,12 @@ import android.os.Bundle;
 import android.os.Environment;
 
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,11 +29,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.bookclub.models.Book;
 import com.example.bookclub.utils.Constants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -37,7 +43,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class BookDetailsActivity extends AppCompatActivity {
-    private Book book;
+    private Book book ;
     private ImageView mBookImg;
     private TextView mBookTitle;
     private TextView mBookAuthor;
@@ -71,7 +77,8 @@ public class BookDetailsActivity extends AppCompatActivity {
             viewIntent(book.getBookIMDB());
         }));
 
-        book = getIntent().getParcelableExtra("Book");
+        book = (Book) Parcels.unwrap(getIntent().getParcelableExtra("EXTRA_BOOK"));
+        Log.d("BookDetailsActivity","Book : " + book);
         String bookID = book.getBookIMDB();
 
         Picasso.get()
@@ -175,6 +182,30 @@ public class BookDetailsActivity extends AppCompatActivity {
     public void viewIntent(final String id) {
         Intent intent = new Intent(BookDetailsActivity.this, LibraryActivity.class);
         intent.putExtra("id", id);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logout) {
+            Toast.makeText(BookDetailsActivity.this, "Logout Successfully!", Toast.LENGTH_SHORT).show();
+            onLogout();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void onLogout() {
+        ParseUser.logOut();
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

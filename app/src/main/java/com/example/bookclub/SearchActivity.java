@@ -26,6 +26,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(SearchActivity.this, BookDetailsActivity.class);
                 Book book = abooks.get(position);
-                intent.putExtra("EXTRA_BOOK", (Parcelable) book);
+                intent.putExtra("EXTRA_BOOK", (Parcels.wrap(book)));
                 startActivity(intent);
 
             }
