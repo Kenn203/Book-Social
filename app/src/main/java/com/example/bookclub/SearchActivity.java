@@ -1,8 +1,10 @@
 package com.example.bookclub;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.bookclub.Adapters.BookAdapter;
 import com.example.bookclub.models.Book;
 import com.example.bookclub.net.BookClient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -34,6 +37,8 @@ public class SearchActivity extends AppCompatActivity {
     private BookAdapter bookAdapter;
     private BookClient client;
     private ArrayList<Book> abooks;
+    private BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.book_list);
 
         rvBooks = findViewById(R.id.rvBooks);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
         abooks = new ArrayList<>();
 
         bookAdapter = new BookAdapter(this, abooks);
@@ -56,6 +62,29 @@ public class SearchActivity extends AppCompatActivity {
                 intent.putExtra("EXTRA_BOOK", (Parcelable) book);
                 startActivity(intent);
 
+            }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+                switch (item.getItemId()){
+                    case R.id.action_home:
+                        Toast.makeText(SearchActivity.this,"Home", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_book:
+                        Toast.makeText(SearchActivity.this,"Book", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_user:
+                        Toast.makeText(SearchActivity.this,"User", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_search:
+                    default:
+                        Toast.makeText(SearchActivity.this,"Search", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
             }
         });
 

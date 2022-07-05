@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".BookDetailsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/content_book_detail"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:fab_addButtonColorNormal="#5f4339"
+        app:fab_addButtonColorPressed="#744F43"
+        app:fab_addButtonPlusIconColor="#fff">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mShareID"
+            style="@style/custom_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#FFFFFF"
+            app:fab_colorPressed="@color/white_pressed"
+            app:fab_icon="@drawable/ic_baseline_share_24"
+            app:fab_size="normal"
+            app:fab_title="Share"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mViewID"
+            style="@style/custom_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#FFFFFF"
+            app:fab_colorPressed="@color/white_pressed"
+            app:fab_size="normal"
+            app:fab_icon="@drawable/ic_baseline_visibility_24"
+            app:fab_title="View"/>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+</android.support.design.widget.CoordinatorLayout>

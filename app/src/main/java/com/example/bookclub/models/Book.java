@@ -12,6 +12,11 @@ public class Book {
     private String openLibraryId;
     private String author;
     private String title;
+    private String bookIMDB;
+    private String publisher;
+    private int pages;
+    private String ISBN;
+
 
     public String getOpenLibraryId() {
         return openLibraryId;
@@ -20,6 +25,17 @@ public class Book {
     public String getTitle() {
         return title;
     }
+
+    public String getBookIMDB(){return bookIMDB;}
+    public void setBookIMDB(String bookIMDB){this.bookIMDB = bookIMDB;}
+
+    public String getPublisher(){return publisher;}
+    public void setPublisher(String publisher){this.publisher = publisher;}
+
+    public int getPages(){return pages;}
+    public void setPages(int pages){this.pages = pages;}
+
+
 
     public String getAuthor() {
         return author;

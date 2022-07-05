@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
         mBtnSignIn = findViewById(R.id.mBtnSignIn);
         mBtnSignUp = findViewById(R.id.mBtnSignUp);
 
+        if(ParseUser.getCurrentUser() != null){
+            HomeActivity();
+        }
+
+
         mBtnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +129,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void HomeActivity() {
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     private void getUserDetailsFromParse() {
         ParseUser user = ParseUser.getCurrentUser();
         String title = "Welcome Back";
@@ -179,4 +190,5 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
+
 }
