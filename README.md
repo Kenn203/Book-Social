@@ -145,5 +145,6 @@ Add book to either read, unread or now reading
   
    
 ## Difficult Challenges
-  * Start typing and swipe on search to auto-complete
+  * Add an autocomplete feature to search. That is there will be a drop down list of all possible words that could follow after the first word.
+  * User could scan the ISBN for a book to search for the book
   
