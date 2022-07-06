@@ -67,6 +67,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         mBookPublisher = findViewById(R.id.mPublishedBy);
         mBookPages = findViewById(R.id.mPages);
 
+        //Floating Action Buttons
         shareButton = findViewById(R.id.mShareID);
         viewButton = findViewById(R.id.mViewID);
 
@@ -74,16 +75,17 @@ public class BookDetailsActivity extends AppCompatActivity {
             shareIntent();
         }));
         viewButton.setOnClickListener((v -> {
-            viewIntent(book.getBookIMDB());
+            viewIntent(book.getISBN());
         }));
 
+        //Get the book intent
         book = (Book) Parcels.unwrap(getIntent().getParcelableExtra("EXTRA_BOOK"));
         Log.d("BookDetailsActivity","Book : " + book);
-        String bookID = book.getBookIMDB();
+        String bookID = book.getISBN();
 
         Picasso.get()
                 .load(book.getCoverUrl())
-                .placeholder(R.drawable.cover_image)
+                .placeholder(R.drawable.ic_nocover)
                 .into(mBookImg);
 
         mBookTitle.setText(book.getTitle());
@@ -180,7 +182,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     }
 
     public void viewIntent(final String id) {
-        Intent intent = new Intent(BookDetailsActivity.this, LibraryActivity.class);
+        Intent intent = new Intent(BookDetailsActivity.this, ViewActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
     }
