@@ -118,6 +118,8 @@ Add book to either read, unread or now reading
   * Work on the search screen
   * Integrate the open library API
   * Users can now search for books
+  * work on Barcode
+  * autocomplete
 
 **Week 3**
   * Build the library screen
@@ -128,19 +130,23 @@ Add book to either read, unread or now reading
   * Build the home screen
   * User can see current reading books
   * User can set reading goals
- 
+  
 **Week 5**
+ * Barcode 
+ * Autocomplete
+ 
+**Week 6**
   * Build the user page
   * User can post a review
   * User can rate a review
   * User can like a review
  
-**Week 6**
+**Week 7**
   * Build the post details page
   * Fetch book description, book cover and title from the API
   * User can see brief description on about a book
 
-**Week 7**
+**Week 8**
   * Start working on some stretch goals
   
    
