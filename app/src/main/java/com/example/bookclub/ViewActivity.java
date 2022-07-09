@@ -40,7 +40,7 @@ public class ViewActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         String idUrl = bundle.getString("id");
-        webView.loadUrl("https://openlibrary.org/books/"+ idUrl);
+        webView.loadUrl("https://openlibrary.org/books/" + idUrl);
 
         webView.setWebViewClient(new WebViewClient(){
             @Override

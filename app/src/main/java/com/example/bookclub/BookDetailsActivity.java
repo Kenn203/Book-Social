@@ -2,6 +2,7 @@ package com.example.bookclub;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +16,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +29,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bookclub.Adapters.LibraryItemAdapter;
 import com.example.bookclub.models.Book;
+import com.example.bookclub.models.LibraryItem;
 import com.example.bookclub.utils.Constants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -41,6 +48,7 @@ import org.w3c.dom.Text;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class BookDetailsActivity extends AppCompatActivity {
     private Book book ;
@@ -49,9 +57,9 @@ public class BookDetailsActivity extends AppCompatActivity {
     private TextView mBookAuthor;
     private TextView mBookPublisher;
     private TextView mBookPages;
+    private Button mAddToLibrary;
     private FloatingActionButton shareButton;
     private FloatingActionButton viewButton;
-
     private RequestQueue queue;
 
     @Override
@@ -61,11 +69,33 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
 
+        mAddToLibrary = findViewById(R.id.mAddToLibrary);
         mBookImg = findViewById(R.id.mBookImg);
         mBookTitle = findViewById(R.id.mTitleID);
         mBookAuthor = findViewById(R.id.mAuthorID);
         mBookPublisher = findViewById(R.id.mPublishedBy);
         mBookPages = findViewById(R.id.mPages);
+
+        mAddToLibrary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                LibraryItem libraryItem = new LibraryItem(book);
+                libraryItem.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Toast.makeText(BookDetailsActivity.this, "Adding to library unsuccessful", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        currentUser.add("LibraryItem", libraryItem);
+                        currentUser.saveInBackground();
+                        Toast.makeText(BookDetailsActivity.this, "Adding to library successful", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+            }
+        });
 
         //Floating Action Buttons
         shareButton = findViewById(R.id.mShareID);
@@ -204,6 +234,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
     public void onLogout() {
         ParseUser.logOut();

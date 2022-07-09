@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.bookclub"
-        minSdk 30
+        minSdk 28
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -50,6 +50,7 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
     annotationProcessor 'org.parceler:parceler:1.1.12'
     implementation 'org.parceler:parceler-api:1.1.12'
+
 
 }
 

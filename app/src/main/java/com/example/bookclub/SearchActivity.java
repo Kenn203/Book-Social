@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.bookclub.Adapters.BookAdapter;
 import com.example.bookclub.models.Book;
+import com.example.bookclub.models.LibraryItem;
 import com.example.bookclub.net.BookClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
@@ -156,9 +157,18 @@ public class SearchActivity extends AppCompatActivity {
             Toast.makeText(SearchActivity.this, "Logout Successfully!", Toast.LENGTH_SHORT).show();
             onLogout();
             return true;
+        }else if(id == R.id.action_library){
+            Toast.makeText(SearchActivity.this, "now in library", Toast.LENGTH_SHORT).show();
+            onLibrary();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onLibrary() {
+       Intent intent = new Intent(this, LibraryActivity.class);
+       startActivity(intent);
     }
 
     public void onLogout() {

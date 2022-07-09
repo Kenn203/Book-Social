@@ -2,11 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".BookSearchActivity">
     <item android:id="@+id/logout" android:title="logout"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:orderInCategory="101" app:showAsAction="never" />
     <item android:id="@+id/action_search"
         android:orderInCategory="5"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    <item
+        android:id="@+id/action_library"
+        android:orderInCategory="100"
+        android:title="library"
+        app:showAsAction="never" />
 </menu>
