@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mAddBook"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".BookDetailsActivity">
@@ -27,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/mBookImg"
+            android:id="@+id/ivBookImg"
             android:layout_width="280dp"
             android:layout_height="280dp"
             android:layout_gravity="center_horizontal"
@@ -35,7 +34,7 @@
             app:srcCompat="@android:color/background_dark" />
 
         <TextView
-            android:id="@+id/mTitleID"
+            android:id="@+id/tvTitleID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -47,7 +46,7 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/mAuthorID"
+            android:id="@+id/tvAuthorID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -65,32 +64,32 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/mPublishedBy"
+            android:id="@+id/tvPublishedBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Publisher N/A"
+            android:text="@string/publisher_na"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/mPages"
+            android:id="@+id/tvPages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:text="Pages N/A"
+            android:text="@string/pages_na"
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/mAddToLibrary"
+            android:id="@+id/tvAddToLibrary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Add to Library" />
+            android:text="@string/Add_to_library"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

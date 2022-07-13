@@ -8,6 +8,10 @@
     <string name="facebook_client_token">56789</string>
     <string name="publisher_na">Publisher N/A</string>
     <string name="pages_na">Pages N/A</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logout">Logout Successfully!</string>
+    <string name="in_library">Now in library</string>
+    <string name="Add_to_library">Add to Library</string>
+    <string name="scan">Scanning</string>
+    <string name="scan_title">Scan QR/Bar Codes</string>
+    <string name="search_list">Not in this list</string>
 </resources>

@@ -2,7 +2,6 @@ package com.example.bookclub;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,7 +28,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.bookclub.Adapters.LibraryItemAdapter;
 import com.example.bookclub.models.Book;
 import com.example.bookclub.models.LibraryItem;
 import com.example.bookclub.utils.Constants;
@@ -43,12 +41,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 public class BookDetailsActivity extends AppCompatActivity {
     private Book book ;
@@ -58,8 +54,8 @@ public class BookDetailsActivity extends AppCompatActivity {
     private TextView mBookPublisher;
     private TextView mBookPages;
     private Button mAddToLibrary;
-    private FloatingActionButton shareButton;
-    private FloatingActionButton viewButton;
+    private FloatingActionButton mShareButton;
+    private FloatingActionButton mViewButton;
     private RequestQueue queue;
 
     @Override
@@ -69,12 +65,12 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
 
-        mAddToLibrary = findViewById(R.id.mAddToLibrary);
-        mBookImg = findViewById(R.id.mBookImg);
-        mBookTitle = findViewById(R.id.mTitleID);
-        mBookAuthor = findViewById(R.id.mAuthorID);
-        mBookPublisher = findViewById(R.id.mPublishedBy);
-        mBookPages = findViewById(R.id.mPages);
+        mAddToLibrary = findViewById(R.id.tvAddToLibrary);
+        mBookImg = findViewById(R.id.ivBookImg);
+        mBookTitle = findViewById(R.id.tvTitleID);
+        mBookAuthor = findViewById(R.id.tvAuthorID);
+        mBookPublisher = findViewById(R.id.tvPublishedBy);
+        mBookPages = findViewById(R.id.tvPages);
 
         mAddToLibrary.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +94,14 @@ public class BookDetailsActivity extends AppCompatActivity {
         });
 
         //Floating Action Buttons
-        shareButton = findViewById(R.id.mShareID);
-        viewButton = findViewById(R.id.mViewID);
+        mShareButton = findViewById(R.id.mShareID);
+        mViewButton = findViewById(R.id.mViewID);
 
-        shareButton.setOnClickListener((v -> {
+        mShareButton.setOnClickListener((v -> {
             shareIntent();
         }));
-        viewButton.setOnClickListener((v -> {
-            viewIntent(book.getISBN());
+        mViewButton.setOnClickListener((v -> {
+            launchViewIntent(book.getISBN());
         }));
 
         //Get the book intent
@@ -170,8 +166,8 @@ public class BookDetailsActivity extends AppCompatActivity {
     }
 
     private void shareIntent() {
-        ImageView shareImage = (ImageView) findViewById(R.id.mBookImg);
-        TextView shareTitle = (TextView) findViewById(R.id.mTitleID);
+        ImageView shareImage = (ImageView) findViewById(R.id.ivBookImg);
+        TextView shareTitle = (TextView) findViewById(R.id.tvTitleID);
 
         Uri bmpUri = getLocalBitmapUri(shareImage);
         // Construct a ShareIntent with link to image
@@ -211,8 +207,8 @@ public class BookDetailsActivity extends AppCompatActivity {
         return bmpUri;
     }
 
-    public void viewIntent(final String id) {
-        Intent intent = new Intent(BookDetailsActivity.this, ViewActivity.class);
+    public void launchViewIntent(final String id) {
+        Intent intent = new Intent(BookDetailsActivity.this, WebViewActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
     }

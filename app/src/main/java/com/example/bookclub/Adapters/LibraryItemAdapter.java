@@ -17,51 +17,51 @@ import com.example.bookclub.models.LibraryItem;
 import java.util.List;
 
 public class LibraryItemAdapter extends RecyclerView.Adapter<LibraryItemAdapter.ViewHolder> {
-    private Context context;
-    private List<LibraryItem> libraryItemList;
+    private Context mContext;
+    private List<LibraryItem> mLibraryItemList;
 
-    public LibraryItemAdapter(Context context, List<LibraryItem> libraryItemList){
-        this.context = context;
-        this.libraryItemList = libraryItemList;
+    public LibraryItemAdapter(Context context, List<LibraryItem> libraryItemList) {
+        this.mContext = context;
+        this.mLibraryItemList = libraryItemList;
     }
 
     @NonNull
     @Override
     public LibraryItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_library, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.activity_library, parent, false);
         return new ViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull LibraryItemAdapter.ViewHolder holder, int position) {
-        LibraryItem libraryItem = libraryItemList.get(position);
+        LibraryItem libraryItem = mLibraryItemList.get(position);
         holder.bind(libraryItem);
-
     }
 
     @Override
-    public int getItemCount() {return libraryItemList.size();}
+    public int getItemCount() {
+        return mLibraryItemList.size();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvAuthor;
-        private TextView tvTitle;
-        private ImageView ivBookCover;
+        private TextView mTvAuthor;
+        private TextView mTvTitle;
+        private ImageView mIvBookCover;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvAuthor = itemView.findViewById(R.id.tvAuthor);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            ivBookCover = itemView.findViewById(R.id.ivBookCover);
+            mTvAuthor = itemView.findViewById(R.id.tvAuthor);
+            mTvTitle = itemView.findViewById(R.id.tvTitle);
+            mIvBookCover = itemView.findViewById(R.id.ivBookCover);
         }
 
-        public void bind(LibraryItem item){
-            tvAuthor.setText(item.getAuthorName());
-            tvTitle.setText(item.getBookTitle());
+        public void bind(LibraryItem item) {
+            mTvAuthor.setText(item.getAuthorName());
+            mTvTitle.setText(item.getBookTitle());
             String image = item.getCoverUrl();
 
-            if (image != null){
-                Glide.with(context).load(image).into(ivBookCover);
+            if (image != null) {
+                Glide.with(mContext).load(image).into(mIvBookCover);
             }
         }
     }

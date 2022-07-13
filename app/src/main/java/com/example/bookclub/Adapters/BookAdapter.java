@@ -5,9 +5,13 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,12 +20,19 @@ import com.example.bookclub.R;
 import com.example.bookclub.models.Book;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     private List<Book> mBooks;
     private Context mContext;
     private OnItemClickListener listener;
+
+    public void setFilteredList(List<Book> filteredList) {
+        this.mBooks = filteredList;
+        notifyDataSetChanged();
+    }
 
 
     public interface OnItemClickListener {
@@ -36,6 +47,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         public ImageView ivCover;
         public TextView tvTitle;
         public TextView tvAuthor;
+        public CardView cardView;
 
         public ViewHolder(final View itemView, final OnItemClickListener clickListener) {
             super(itemView);
@@ -43,6 +55,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             ivCover = (ImageView) itemView.findViewById(R.id.ivBookCover);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvAuthor = (TextView) itemView.findViewById(R.id.tvAuthor);
+            cardView = itemView.findViewById(R.id.CardViewID);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,6 +94,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.ic_nocover))
                 .into(viewHolder.ivCover);
+
+        viewHolder.cardView.startAnimation(AnimationUtils.loadAnimation(viewHolder.cardView.getContext(), R.anim.anim_sliding));
     }
 
     @Override

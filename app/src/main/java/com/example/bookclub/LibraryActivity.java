@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.bookclub.Adapters.LibraryItemAdapter;
@@ -24,8 +25,8 @@ import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
     private RecyclerView rvLibraryItem;
-    protected LibraryItemAdapter libraryItemAdapter;
-    protected List<LibraryItem> allLibraryItems;
+    protected LibraryItemAdapter mLibraryItemAdapter;
+    protected List<LibraryItem> mAllLibraryItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +35,20 @@ public class LibraryActivity extends AppCompatActivity {
 
 
         rvLibraryItem = findViewById(R.id.rvLibraryItem);
-        allLibraryItems = new ArrayList<>();
-        libraryItemAdapter = new LibraryItemAdapter(this, allLibraryItems);
-        rvLibraryItem.setAdapter(libraryItemAdapter);
+        mAllLibraryItems = new ArrayList<>();
+        mLibraryItemAdapter =  new LibraryItemAdapter(this, mAllLibraryItems);
+        rvLibraryItem.setAdapter(mLibraryItemAdapter);
         rvLibraryItem.setLayoutManager(new LinearLayoutManager(this));
-        populateLibraryItem();
+        populateLibraryItems();
     }
 
-    private void populateLibraryItem(){
+    private void populateLibraryItems() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         JSONArray itemsInLibrary = currentUser.getJSONArray("LibraryItem");
-        if(itemsInLibrary == null){
+        if (itemsInLibrary == null) {
             return;
         }
-        for (int i = 0; i < itemsInLibrary.length(); i++){
+        for (int i = 0; i < itemsInLibrary.length(); i++) {
             try {
                 JSONObject libraryItem = (JSONObject) itemsInLibrary.get(i);
                 String itemId = (String) libraryItem.get("objectId");
@@ -65,12 +66,11 @@ public class LibraryActivity extends AppCompatActivity {
         query.getInBackground(itemId, new GetCallback<LibraryItem>() {
             @Override
             public void done(LibraryItem books, ParseException e) {
-                if(e == null){
-                    allLibraryItems.add(books);
-                    libraryItemAdapter.notifyDataSetChanged();
-                }
-                else{
-
+                if (e == null) {
+                    mAllLibraryItems.add(books);
+                    mLibraryItemAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d("LibraryActivity", "Check if all books are added");
                 }
             }
         });
