@@ -244,11 +244,9 @@ public class SearchActivity extends AppCompatActivity {
                     ClipData clipData = ClipData.newPlainText("OK", intentResult.getContents());
                     clipboardManager.setPrimaryClip(clipData);
                     Toast.makeText(SearchActivity.this, "copied", Toast.LENGTH_SHORT).show();
-                    //dismiss dialog
                     dialog.dismiss();
                 }
             });
-            //show alert dialog
             builder.show();
         } else {
             Toast.makeText(getApplicationContext(), "You didn't scan anything", Toast.LENGTH_SHORT).show();

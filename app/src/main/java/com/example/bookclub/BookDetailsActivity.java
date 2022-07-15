@@ -47,7 +47,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class BookDetailsActivity extends AppCompatActivity {
-    private Book book ;
+    private Book book;
     private ImageView mBookImg;
     private TextView mBookTitle;
     private TextView mBookAuthor;
@@ -80,7 +80,7 @@ public class BookDetailsActivity extends AppCompatActivity {
                 libraryItem.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e != null){
+                        if (e != null) {
                             Toast.makeText(BookDetailsActivity.this, "Adding to library unsuccessful", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -101,13 +101,14 @@ public class BookDetailsActivity extends AppCompatActivity {
             shareIntent();
         }));
         mViewButton.setOnClickListener((v -> {
+            Log.d("BookDetailsActivity", "Checking for ISBN " + book.getISBN());
             launchViewIntent(book.getISBN());
         }));
 
         //Get the book intent
         book = (Book) Parcels.unwrap(getIntent().getParcelableExtra("EXTRA_BOOK"));
-        Log.d("BookDetailsActivity","Book : " + book);
-        String bookID = book.getISBN();
+        Integer bookPages = book.getPages();
+        String publisher = book.getPublisher();
 
         Picasso.get()
                 .load(book.getCoverUrl())
@@ -116,53 +117,9 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         mBookTitle.setText(book.getTitle());
         mBookAuthor.setText(book.getAuthor());
-
-        getBookDetails(bookID);
-    }
-
-    public void getBookDetails(String id) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.BASE_LEFT_URL + id + Constants.BASE_RIGHT_URL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        if (response.has("publishers")) {
-                            try {
-                                JSONArray publishersArray = response.getJSONArray("publishers");
-                                int arrayLength = publishersArray.length();
-                                String[] publishers = new String[arrayLength];
-                                for (int i = 0; i < arrayLength; i++) {
-                                    publishers[i] = publishersArray.getString(i);
-                                }
-                                mBookPublisher.setText(TextUtils.join(",", publishers));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            mBookPublisher.setText(getString(R.string.publisher_na));
-                        }
-
-                        if (response.has("number_of_pages")) {
-                            try {
-                                mBookPages.setText(String.format("%s Pages", Integer.toString(response.getInt("number_of_pages"))));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            mBookPages.setText(getString(R.string.pages_na));
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Error", error.getMessage());
-            }
-        });
-        queue.add(jsonObjectRequest);
-
+        String pages = Integer.toString(bookPages);
+        mBookPages.setText(pages);
+        mBookPublisher.setText(publisher);
     }
 
     private void shareIntent() {
@@ -231,11 +188,9 @@ public class BookDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void onLogout() {
         ParseUser.logOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 }

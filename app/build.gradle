@@ -51,5 +51,6 @@ dependencies {
     implementation 'org.parceler:parceler-api:1.1.12'
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4'
 }
 

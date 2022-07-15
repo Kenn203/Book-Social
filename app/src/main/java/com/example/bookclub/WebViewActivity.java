@@ -26,7 +26,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         String idUrl = bundle.getString("id");
-        mWebView.loadUrl("https://openlibrary.org/books/" + idUrl);
+        mWebView.loadUrl("openlibrary.org/isbn/" + idUrl);
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -34,13 +34,23 @@ public class WebViewActivity extends AppCompatActivity {
                 super.onPageStarted(view, url, favicon);
                 mProgressBar.setVisibility(View.GONE);
             }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                mWebView.setVisibility(View.GONE);
-            }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void setupWebView() {
@@ -58,21 +68,5 @@ public class WebViewActivity extends AppCompatActivity {
         settings.setSavePassword(true);
         settings.setSaveFormData(true);
         settings.setEnableSmoothTransition(true);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    if (mWebView.canGoBack()) {
-                        mWebView.goBack();
-                    } else {
-                        finish();
-                    }
-                    return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
     }
 }

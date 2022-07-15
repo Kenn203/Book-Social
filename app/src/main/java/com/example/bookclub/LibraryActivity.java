@@ -1,16 +1,17 @@
 package com.example.bookclub;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.example.bookclub.Adapters.LibraryItemAdapter;
 import com.example.bookclub.models.LibraryItem;
-import com.parse.FindCallback;
+import com.example.bookclub.utils.BookListItemHelper;
+
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -33,10 +34,13 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.library_item);
 
-
         rvLibraryItem = findViewById(R.id.rvLibraryItem);
         mAllLibraryItems = new ArrayList<>();
-        mLibraryItemAdapter =  new LibraryItemAdapter(this, mAllLibraryItems);
+        mLibraryItemAdapter = new LibraryItemAdapter(this, mAllLibraryItems);
+        ItemTouchHelper.Callback callback = new BookListItemHelper(mLibraryItemAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        mLibraryItemAdapter.setTouchHelper(itemTouchHelper);
+        itemTouchHelper.attachToRecyclerView(rvLibraryItem);
         rvLibraryItem.setAdapter(mLibraryItemAdapter);
         rvLibraryItem.setLayoutManager(new LinearLayoutManager(this));
         populateLibraryItems();
