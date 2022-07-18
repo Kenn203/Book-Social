@@ -74,9 +74,9 @@ public class LibraryItemAdapter extends RecyclerView.Adapter<LibraryItemAdapter.
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTvAuthor = itemView.findViewById(R.id.tvAuthor);
-            mTvTitle = itemView.findViewById(R.id.tvTitle);
-            mIvBookCover = itemView.findViewById(R.id.ivBookCover);
+            mTvAuthor = itemView.findViewById(R.id.tv_author);
+            mTvTitle = itemView.findViewById(R.id.tv_title);
+            mIvBookCover = itemView.findViewById(R.id.iv_book_cover);
             mGestureDetector = new GestureDetector(itemView.getContext(),  this);
             itemView.setOnTouchListener(this);
         }

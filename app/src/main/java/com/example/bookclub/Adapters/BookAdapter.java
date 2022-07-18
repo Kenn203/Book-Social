@@ -52,9 +52,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         public ViewHolder(final View itemView, final OnItemClickListener clickListener) {
             super(itemView);
 
-            ivCover = (ImageView) itemView.findViewById(R.id.ivBookCover);
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            tvAuthor = (TextView) itemView.findViewById(R.id.tvAuthor);
+            ivCover = (ImageView) itemView.findViewById(R.id.iv_book_cover);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvAuthor = (TextView) itemView.findViewById(R.id.tv_author);
             cardView = itemView.findViewById(R.id.CardViewID);
 
             itemView.setOnClickListener(new View.OnClickListener() {
