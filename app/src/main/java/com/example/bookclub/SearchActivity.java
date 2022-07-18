@@ -102,7 +102,7 @@ public class SearchActivity extends AppCompatActivity {
 
         rvBooks.setAdapter(bookAdapter);
         rvBooks.setLayoutManager(new LinearLayoutManager(this));
-        fetchBooks("Malcolm Gladwell");
+        //fetchBooks("Malcolm Gladwell");
     }
 
     private void fetchBooks(String query) {
@@ -243,13 +243,13 @@ public class SearchActivity extends AppCompatActivity {
                     ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clipData = ClipData.newPlainText("OK", intentResult.getContents());
                     clipboardManager.setPrimaryClip(clipData);
-                    Toast.makeText(SearchActivity.this, "copied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, getText(R.string.copied), Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
             });
             builder.show();
         } else {
-            Toast.makeText(getApplicationContext(), "You didn't scan anything", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getText(R.string.not_scanned), Toast.LENGTH_SHORT).show();
         }
     }
 }

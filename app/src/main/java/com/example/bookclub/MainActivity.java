@@ -44,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
         ParseInstallation.getCurrentInstallation().saveInBackground();
         btnLogin = findViewById(R.id.btnLogin);
-        mEtUsername = findViewById(R.id.mEtUsername);
-        mEtPassword = findViewById(R.id.mEtPassword);
-        mBtnSignIn = findViewById(R.id.mBtnSignIn);
-        mBtnSignUp = findViewById(R.id.mBtnSignUp);
+        mEtUsername = findViewById(R.id.etUsername);
+        mEtPassword = findViewById(R.id.etPassword);
+        mBtnSignIn = findViewById(R.id.btnSignIn);
+        mBtnSignUp = findViewById(R.id.btnSignUp);
 
         if(ParseUser.getCurrentUser() != null){
             HomeActivity();

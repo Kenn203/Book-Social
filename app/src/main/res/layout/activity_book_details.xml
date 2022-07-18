@@ -38,7 +38,7 @@
             app:fab_title="Share" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/mViewID"
+            android:id="@+id/ViewID"
             style="@style/custom_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

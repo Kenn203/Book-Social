@@ -65,7 +65,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
 
-        mAddToLibrary = findViewById(R.id.tvAddToLibrary);
+        mAddToLibrary = findViewById(R.id.tv_add_to_library);
         mBookImg = findViewById(R.id.ivBookImg);
         mBookTitle = findViewById(R.id.tvTitleID);
         mBookAuthor = findViewById(R.id.tvAuthorID);
@@ -95,7 +95,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         //Floating Action Buttons
         mShareButton = findViewById(R.id.mShareID);
-        mViewButton = findViewById(R.id.mViewID);
+        mViewButton = findViewById(R.id.ViewID);
 
         mShareButton.setOnClickListener((v -> {
             shareIntent();

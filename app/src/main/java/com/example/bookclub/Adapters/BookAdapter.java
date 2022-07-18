@@ -27,7 +27,7 @@ import java.util.Locale;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     private List<Book> mBooks;
     private Context mContext;
-    private OnItemClickListener listener;
+    private OnItemClickListener mListener;
 
     public void setFilteredList(List<Book> filteredList) {
         this.mBooks = filteredList;
@@ -40,7 +40,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
+        this.mListener = listener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -78,7 +78,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
         View bookView = inflater.inflate(R.layout.activity_search, parent, false);
 
-        BookAdapter.ViewHolder viewHolder = new BookAdapter.ViewHolder(bookView, listener);
+        BookAdapter.ViewHolder viewHolder = new BookAdapter.ViewHolder(bookView, mListener);
         return viewHolder;
     }
 
