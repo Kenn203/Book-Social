@@ -15,6 +15,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,31 +29,33 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bookclub.models.Book;
+import com.example.bookclub.models.LibraryItem;
 import com.example.bookclub.utils.Constants;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class BookDetailsActivity extends AppCompatActivity {
-    private Book book ;
+    private Book book;
     private ImageView mBookImg;
     private TextView mBookTitle;
     private TextView mBookAuthor;
     private TextView mBookPublisher;
     private TextView mBookPages;
-    private FloatingActionButton shareButton;
-    private FloatingActionButton viewButton;
-
+    private Button mAddToLibrary;
+    private FloatingActionButton mShareButton;
+    private FloatingActionButton mViewButton;
     private RequestQueue queue;
 
     @Override
@@ -61,85 +65,66 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
 
-        mBookImg = findViewById(R.id.mBookImg);
-        mBookTitle = findViewById(R.id.mTitleID);
-        mBookAuthor = findViewById(R.id.mAuthorID);
-        mBookPublisher = findViewById(R.id.mPublishedBy);
-        mBookPages = findViewById(R.id.mPages);
+        mAddToLibrary = findViewById(R.id.tv_add_to_library);
+        mBookImg = findViewById(R.id.ivBookImg);
+        mBookTitle = findViewById(R.id.tvTitleID);
+        mBookAuthor = findViewById(R.id.tvAuthorID);
+        mBookPublisher = findViewById(R.id.tvPublishedBy);
+        mBookPages = findViewById(R.id.tvPages);
 
-        shareButton = findViewById(R.id.mShareID);
-        viewButton = findViewById(R.id.mViewID);
+        mAddToLibrary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                LibraryItem libraryItem = new LibraryItem(book);
+                libraryItem.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Toast.makeText(BookDetailsActivity.this, "Adding to library unsuccessful", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        currentUser.add("LibraryItem", libraryItem);
+                        currentUser.saveInBackground();
+                        Toast.makeText(BookDetailsActivity.this, "Adding to library successful", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+            }
+        });
 
-        shareButton.setOnClickListener((v -> {
+        //Floating Action Buttons
+        mShareButton = findViewById(R.id.mShareID);
+        mViewButton = findViewById(R.id.ViewID);
+
+        mShareButton.setOnClickListener((v -> {
             shareIntent();
         }));
-        viewButton.setOnClickListener((v -> {
-            viewIntent(book.getBookIMDB());
+        mViewButton.setOnClickListener((v -> {
+            Log.d("BookDetailsActivity", "Checking for ISBN " + book.getISBN());
+            launchViewIntent(book.getISBN());
         }));
 
+        //Get the book intent
         book = (Book) Parcels.unwrap(getIntent().getParcelableExtra("EXTRA_BOOK"));
-        Log.d("BookDetailsActivity","Book : " + book);
-        String bookID = book.getBookIMDB();
+        Integer bookPages = book.getPages();
+        String publisher = book.getPublisher();
 
         Picasso.get()
                 .load(book.getCoverUrl())
-                .placeholder(R.drawable.cover_image)
+                .placeholder(R.drawable.ic_nocover)
                 .into(mBookImg);
 
         mBookTitle.setText(book.getTitle());
         mBookAuthor.setText(book.getAuthor());
-
-        getBookDetails(bookID);
-    }
-
-    public void getBookDetails(String id) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                Constants.BASE_LEFT_URL + id + Constants.BASE_RIGHT_URL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        if (response.has("publishers")) {
-                            try {
-                                JSONArray publishersArray = response.getJSONArray("publishers");
-                                int arrayLength = publishersArray.length();
-                                String[] publishers = new String[arrayLength];
-                                for (int i = 0; i < arrayLength; i++) {
-                                    publishers[i] = publishersArray.getString(i);
-                                }
-                                mBookPublisher.setText(TextUtils.join(",", publishers));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            mBookPublisher.setText(getString(R.string.publisher_na));
-                        }
-
-                        if (response.has("number_of_pages")) {
-                            try {
-                                mBookPages.setText(String.format("%s Pages", Integer.toString(response.getInt("number_of_pages"))));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            mBookPages.setText(getString(R.string.pages_na));
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Error", error.getMessage());
-            }
-        });
-        queue.add(jsonObjectRequest);
-
+        String pages = Integer.toString(bookPages);
+        mBookPages.setText(pages);
+        mBookPublisher.setText(publisher);
     }
 
     private void shareIntent() {
-        ImageView shareImage = (ImageView) findViewById(R.id.mBookImg);
-        TextView shareTitle = (TextView) findViewById(R.id.mTitleID);
+        ImageView shareImage = (ImageView) findViewById(R.id.ivBookImg);
+        TextView shareTitle = (TextView) findViewById(R.id.tvTitleID);
 
         Uri bmpUri = getLocalBitmapUri(shareImage);
         // Construct a ShareIntent with link to image
@@ -179,8 +164,8 @@ public class BookDetailsActivity extends AppCompatActivity {
         return bmpUri;
     }
 
-    public void viewIntent(final String id) {
-        Intent intent = new Intent(BookDetailsActivity.this, LibraryActivity.class);
+    public void launchViewIntent(final String id) {
+        Intent intent = new Intent(BookDetailsActivity.this, WebViewActivity.class);
         intent.putExtra("id", id);
         startActivity(intent);
     }
@@ -208,5 +193,4 @@ public class BookDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 }

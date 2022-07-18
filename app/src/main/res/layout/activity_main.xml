@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:text="Login with Facebook"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/mBtnSignUp"
+        app:layout_constraintEnd_toEndOf="@+id/btnSignUp"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/mBtnSignUp"
-        app:layout_constraintTop_toBottomOf="@+id/mBtnSignUp"
+        app:layout_constraintStart_toStartOf="@+id/btnSignUp"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignUp"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/mEtUsername"
+        android:id="@+id/etUsername"
         android:layout_width="327dp"
         android:layout_height="53dp"
         android:layout_marginTop="36dp"
@@ -32,31 +32,31 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/mEtPassword"
+        android:id="@+id/etPassword"
         android:layout_width="326dp"
         android:layout_height="53dp"
         android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/mEtUsername"
+        app:layout_constraintEnd_toEndOf="@+id/etUsername"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/mEtUsername"
-        app:layout_constraintTop_toBottomOf="@+id/mEtUsername" />
+        app:layout_constraintStart_toStartOf="@+id/etUsername"
+        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <Button
-        android:id="@+id/mBtnSignIn"
+        android:id="@+id/btnSignIn"
         android:layout_width="192dp"
         android:layout_height="46dp"
         android:layout_marginTop="56dp"
         android:text="Sign In"
-        app:layout_constraintEnd_toEndOf="@+id/mEtPassword"
+        app:layout_constraintEnd_toEndOf="@+id/etPassword"
         app:layout_constraintHorizontal_bias="0.347"
-        app:layout_constraintStart_toStartOf="@+id/mEtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/mEtPassword" />
+        app:layout_constraintStart_toStartOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <Button
-        android:id="@+id/mBtnSignUp"
+        android:id="@+id/btnSignUp"
         android:layout_width="207dp"
         android:layout_height="47dp"
         android:layout_marginTop="24dp"
@@ -72,10 +72,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Don't have an account?"
-        app:layout_constraintEnd_toEndOf="@+id/mBtnSignIn"
+        app:layout_constraintEnd_toEndOf="@+id/btnSignIn"
         app:layout_constraintHorizontal_bias="0.369"
-        app:layout_constraintStart_toStartOf="@+id/mBtnSignIn"
-        app:layout_constraintTop_toBottomOf="@+id/mBtnSignIn" />
+        app:layout_constraintStart_toStartOf="@+id/btnSignIn"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
     <ImageView
         android:id="@+id/imageView"

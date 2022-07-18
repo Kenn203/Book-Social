@@ -15,12 +15,12 @@ public class Book {
     private String openLibraryId;
     private String author;
     private String title;
-    private String bookIMDB;
     private String publisher;
     private int pages;
     private String ISBN;
 
-    public void Book(){}
+    public void Book() {
+    }
 
     public String getOpenLibraryId() {
         return openLibraryId;
@@ -29,9 +29,6 @@ public class Book {
     public String getTitle() {
         return title;
     }
-
-    public String getBookIMDB(){return bookIMDB;}
-    public void setBookIMDB(String bookIMDB){this.bookIMDB = bookIMDB;}
 
     public String getAuthor() {
         return author;
@@ -50,6 +47,25 @@ public class Book {
             } else if (jsonObject.has("edition_key")) {
                 final JSONArray ids = jsonObject.getJSONArray("edition_key");
                 book.openLibraryId = ids.getString(0);
+            }
+
+            if (jsonObject.has("publisher")) {
+                JSONArray jsonArray = jsonObject.getJSONArray("publisher");
+                if (jsonArray.length() > 0) {
+                    String firstPublisher = (String) jsonArray.get(0);
+                    book.setPublisher(firstPublisher);
+                }
+            }
+
+            if (jsonObject.has("number_of_pages_median")) {
+                Integer bookPages = (Integer) jsonObject.getInt("number_of_pages_median");
+                book.setPages(bookPages);
+            }
+
+            if (jsonObject.has("isbn")) {
+                JSONArray jsonArray = jsonObject.getJSONArray("isbn");
+                String isbn = (String) jsonArray.get(0);
+                book.setISBN(isbn);
             }
             book.title = jsonObject.has("title_suggest") ? jsonObject.getString("title_suggest") : "";
             book.author = getAuthor(jsonObject);
@@ -92,12 +108,28 @@ public class Book {
         }
         return books;
     }
-    public  String getISBN(){return ISBN;}
-    public void setISBN(String ISBN){this.ISBN = ISBN;}
 
-    public String getPublisher(){return publisher;}
-    public void setPublisher(String publisher){this.publisher = publisher;}
+    public String getISBN() {
+        return ISBN;
+    }
 
-    public int getPages(){return pages;}
-    public void setPages(int pages){this.pages = pages;}
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
 }
