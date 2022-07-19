@@ -5,7 +5,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.hardware.camera.any" />
 
     <application
         android:name=".ParseApplication"
@@ -19,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookClub"
         tools:targetApi="31">
+        <activity
+            android:name=".QRCodeMainActivity"
+            android:exported="false" />
         <activity
             android:name=".LibraryActivity"
             android:exported="false" />
@@ -76,10 +80,12 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Capture"
+        <activity
+            android:name=".Capture"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
-            android:theme="@style/zxing_CaptureTheme"/>
+            android:theme="@style/zxing_CaptureTheme" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="@string/facebook_app_id"
