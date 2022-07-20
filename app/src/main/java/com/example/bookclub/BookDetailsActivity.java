@@ -69,8 +69,8 @@ public class BookDetailsActivity extends AppCompatActivity {
         mBookImg = findViewById(R.id.ivBookImg);
         mBookTitle = findViewById(R.id.tvTitleID);
         mBookAuthor = findViewById(R.id.tvAuthorID);
-        mBookPublisher = findViewById(R.id.tvPublishedBy);
-        mBookPages = findViewById(R.id.tvPages);
+        mBookPublisher = findViewById(R.id.tv_published_by);
+        mBookPages = findViewById(R.id.tv_pages);
 
         mAddToLibrary.setOnClickListener(new View.OnClickListener() {
             @Override

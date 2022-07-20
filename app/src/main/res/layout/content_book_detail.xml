@@ -64,7 +64,7 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/tvPublishedBy"
+            android:id="@+id/tv_published_by"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,7 +74,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvPages"
+            android:id="@+id/tv_pages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
