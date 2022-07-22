@@ -1,8 +1,6 @@
 package com.example.bookclub;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
@@ -10,29 +8,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.bookclub.Adapters.BookAdapter;
 import com.example.bookclub.models.Book;
-import com.example.bookclub.models.LibraryItem;
 import com.example.bookclub.net.BookClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -61,6 +49,7 @@ public class SearchActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         abooks = new ArrayList<>();
 
+
         bookAdapter = new BookAdapter(this, abooks);
         bookAdapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
             @Override
@@ -73,7 +62,6 @@ public class SearchActivity extends AppCompatActivity {
                 Book book = abooks.get(position);
                 intent.putExtra("EXTRA_BOOK", (Parcels.wrap(book)));
                 startActivity(intent);
-
             }
         });
 
@@ -195,18 +183,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void onClickScan() {
-        //initialize intent integrator
-        IntentIntegrator intentIntegrator = new IntentIntegrator(SearchActivity.this);
-        //Set prompt text
-        intentIntegrator.setPrompt("For flash use volume up key");
-        //Set beep
-        intentIntegrator.setBeepEnabled(true);
-        //Locked orientation
-        intentIntegrator.setOrientationLocked(true);
-        //set capture activity
-        intentIntegrator.setCaptureActivity(Capture.class);
-        //initialize scan
-        intentIntegrator.initiateScan();
+        Intent intent = new Intent(this, QRCodeMainActivity.class);
+        startActivity(intent);
     }
 
     private void onClickLibrary() {
@@ -218,38 +196,5 @@ public class SearchActivity extends AppCompatActivity {
         ParseUser.logOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Initialize intent result
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(
-                requestCode, resultCode, data
-        );
-
-        if (intentResult.getContents() != null) {
-            //when result content is not null
-            //initialize alert dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
-            //set title
-            builder.setTitle("Result");
-            //set message
-            builder.setMessage(intentResult.getContents());
-            //set positive button
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clipData = ClipData.newPlainText("OK", intentResult.getContents());
-                    clipboardManager.setPrimaryClip(clipData);
-                    Toast.makeText(SearchActivity.this, getText(R.string.copied), Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
-        } else {
-            Toast.makeText(getApplicationContext(), getText(R.string.not_scanned), Toast.LENGTH_SHORT).show();
-        }
     }
 }
