@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
+
 import androidx.camera.core.ImageAnalysis;
+
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -22,18 +24,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.MarkEnforcingInputStream;
 import com.example.bookclub.utils.QRCodeFoundListener;
+
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;
 
 public class QRCodeMainActivity extends AppCompatActivity {
+
     public static final int PERMISSION_REQUEST_CAMERA = 0;
     private PreviewView mPreviewView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private Button mQRCodeFound;
     private String qrCode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class QRCodeMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qrcode_main);
 
         mPreviewView = findViewById(R.id.qrcode_preview);
+
         mQRCodeFound = findViewById(R.id.activity_main_qrcode_btn);
         mQRCodeFound.setVisibility(View.INVISIBLE);
         mQRCodeFound.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +55,7 @@ public class QRCodeMainActivity extends AppCompatActivity {
                 Log.i(QRCodeMainActivity.class.getSimpleName(), "QR code Found:" + qrCode);
             }
         });
+
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         requestCamera();
@@ -70,11 +76,13 @@ public class QRCodeMainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         if (requestCode == PERMISSION_REQUEST_CAMERA) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startCamera();
             } else {
                 Toast.makeText(this, getString(R.string.denied), Toast.LENGTH_SHORT).show();
+
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -89,6 +97,7 @@ public class QRCodeMainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.error) + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }, ContextCompat.getMainExecutor(this));
+
     }
 
     private void bindCameraPreview(@NonNull ProcessCameraProvider cameraProvider) {
