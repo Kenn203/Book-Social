@@ -20,16 +20,16 @@ import com.google.zxing.multi.qrcode.QRCodeMultiReader;
 
 import java.nio.ByteBuffer;
 
-public class QRCodeImageAnalyzer implements ImageAnalysis.Analyzer{
+public class QRCodeImageAnalyzer implements ImageAnalysis.Analyzer {
     private QRCodeFoundListener mListener;
 
-    public QRCodeImageAnalyzer(QRCodeFoundListener mListener){
+    public QRCodeImageAnalyzer(QRCodeFoundListener mListener) {
         this.mListener = mListener;
     }
 
     @Override
     public void analyze(@NonNull ImageProxy image) {
-        if (image.getFormat() == YUV_420_888 || image.getFormat() == YUV_422_888 || image.getFormat() == YUV_444_888){
+        if (image.getFormat() == YUV_420_888 || image.getFormat() == YUV_422_888 || image.getFormat() == YUV_444_888) {
             ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
             byte[] imageData = new byte[byteBuffer.capacity()];
             byteBuffer.get(imageData);
@@ -44,10 +44,10 @@ public class QRCodeImageAnalyzer implements ImageAnalysis.Analyzer{
 
             BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source));
 
-            try{
+            try {
                 Result result = new QRCodeMultiReader().decode(binaryBitmap);
                 mListener.onQRCodeFound(result.getText());
-            }catch (FormatException | ChecksumException | NotFoundException e){
+            } catch (FormatException | ChecksumException | NotFoundException e) {
                 mListener.qrCodeNotFound();
             }
         }

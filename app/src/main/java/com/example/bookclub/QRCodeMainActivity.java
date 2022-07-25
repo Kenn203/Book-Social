@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.MarkEnforcingInputStream;
+
 import com.example.bookclub.utils.QRCodeFoundListener;
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -31,9 +31,9 @@ import java.util.concurrent.ExecutionException;
 public class QRCodeMainActivity extends AppCompatActivity {
     public static final int PERMISSION_REQUEST_CAMERA = 0;
     private PreviewView mPreviewView;
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private ListenableFuture<ProcessCameraProvider> mCameraProviderFuture;
     private Button mQRCodeFound;
-    private String qrCode;
+    private String mQrCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +46,13 @@ public class QRCodeMainActivity extends AppCompatActivity {
         mQRCodeFound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
-                Log.i(QRCodeMainActivity.class.getSimpleName(), "QR code Found:" + qrCode);
+                Toast.makeText(getApplicationContext(), mQrCode, Toast.LENGTH_SHORT).show();
+                Log.i(QRCodeMainActivity.class.getSimpleName(), "QR code Found:" + mQrCode);
             }
         });
 
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+        mCameraProviderFuture = ProcessCameraProvider.getInstance(this);
+
         requestCamera();
     }
 
@@ -81,9 +82,9 @@ public class QRCodeMainActivity extends AppCompatActivity {
     }
 
     private void startCamera() {
-        cameraProviderFuture.addListener(() -> {
+        mCameraProviderFuture.addListener(() -> {
             try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                ProcessCameraProvider cameraProvider = mCameraProviderFuture.get();
                 bindCameraPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
                 Toast.makeText(this, getString(R.string.error) + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -112,13 +113,16 @@ public class QRCodeMainActivity extends AppCompatActivity {
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), new QRCodeImageAnalyzer(new QRCodeFoundListener() {
             @Override
             public void onQRCodeFound(String _qrCode) {
-                qrCode = _qrCode;
+                mQrCode = _qrCode;
                 mQRCodeFound.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(QRCodeMainActivity.this, SearchActivity.class);
+                intent.putExtra("EXTRA_QRCODE", _qrCode);
+                startActivity(intent);
             }
 
             @Override
             public void qrCodeNotFound() {
-                mQRCodeFound.setVisibility(View.INVISIBLE);
+                mQRCodeFound.setVisibility(View.GONE);
             }
         }));
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageAnalysis, preview);

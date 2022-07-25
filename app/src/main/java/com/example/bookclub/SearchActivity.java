@@ -39,6 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     private BookClient client;
     private ArrayList<Book> abooks;
     private BottomNavigationView bottomNavigationView;
+    private String qrCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +49,10 @@ public class SearchActivity extends AppCompatActivity {
         rvBooks = findViewById(R.id.rvBooks);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         abooks = new ArrayList<>();
-
+        qrCode = getIntent().getStringExtra("EXTRA_QRCODE");
 
         bookAdapter = new BookAdapter(this, abooks);
+
         bookAdapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
@@ -64,6 +66,9 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        if (qrCode != null) {
+            fetchBooks(qrCode);
+        }
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -153,7 +158,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
                 if (filteredList.isEmpty()) {
-                    Toast.makeText(SearchActivity.this, getString(R.string.search_list), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SearchActivity.this, getString(R.string.search_list), Toast.LENGTH_SHORT).show();
                 } else {
                     bookAdapter.setFilteredList(filteredList);
                 }

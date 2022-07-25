@@ -53,16 +53,18 @@ public class LibraryItemAdapter extends RecyclerView.Adapter<LibraryItemAdapter.
         LibraryItem fromLibraryItem = mLibraryItemList.get(fromPosition);
         mLibraryItemList.remove(fromLibraryItem);
         mLibraryItemList.add(toPosition, fromLibraryItem);
-        notifyItemMoved(fromPosition,toPosition);
+        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
     public void onItemSwiped(int position) {
         mLibraryItemList.remove(position);
+        //LibraryItem libraryItem = mLibraryItemList.get(position);
+        //libraryItem.deleteInBackground();
         notifyItemRemoved(position);
     }
 
-    public void setTouchHelper(ItemTouchHelper touchHelper){
+    public void setTouchHelper(ItemTouchHelper touchHelper) {
         this.mTouchHelper = touchHelper;
     }
 
@@ -77,7 +79,7 @@ public class LibraryItemAdapter extends RecyclerView.Adapter<LibraryItemAdapter.
             mTvAuthor = itemView.findViewById(R.id.tv_author);
             mTvTitle = itemView.findViewById(R.id.tv_title);
             mIvBookCover = itemView.findViewById(R.id.iv_book_cover);
-            mGestureDetector = new GestureDetector(itemView.getContext(),  this);
+            mGestureDetector = new GestureDetector(itemView.getContext(), this);
             itemView.setOnTouchListener(this);
         }
 
