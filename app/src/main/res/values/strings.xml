@@ -16,4 +16,6 @@
     <string name="search_list">Not in this list</string>
     <string name="copied">copied</string>
     <string name="not_scanned">You did not scan anything</string>
+    <string name="denied">Camera Permission Denied</string>
+    <string name="error">Error starting camera</string>
 </resources>
